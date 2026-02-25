@@ -203,12 +203,12 @@
         }
 
         .next-steps {
-            opacity: 0;
-            transform: translateY(20px);
+            display: none;
             pointer-events: none;
         }
 
         .next-steps.visible {
+            display: block;
             animation: flash-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             pointer-events: all;
         }
