@@ -544,7 +544,7 @@
             });
         }
 
-        function generate() {
+        function generate(showPanel = true) {
             const result = words.map(list => list[Math.floor(Math.random() * list.length)]).join(' ');
             const resultEl = document.getElementById('result');
             
@@ -556,7 +556,7 @@
 
             const total = words[0].length * words[1].length * words[2].length;
             document.getElementById('stats').textContent = `Inferred from ${total.toLocaleString()} unique combinations.`;
-            showNextSteps();
+            if (showPanel) showNextSteps();
         }
 
         const LLM_URLS = {
@@ -628,7 +628,7 @@ Make them all feel authentic, slightly embarrassing, and deeply shareable.`,
         }
 
         populateLists();
-        generate();
+        generate(false);
     </script>
 </body>
 </html>
