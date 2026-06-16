@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Bullshit Generator 2027</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #002029;
@@ -22,13 +25,18 @@
 
         body {
             background-color: var(--bg);
+            background-image:
+                radial-gradient(60rem 60rem at 15% -10%, rgba(255, 84, 37, 0.14), transparent 60%),
+                radial-gradient(50rem 50rem at 110% 10%, rgba(255, 138, 96, 0.10), transparent 55%),
+                radial-gradient(70rem 70rem at 50% 120%, rgba(0, 80, 100, 0.45), transparent 60%);
+            background-attachment: fixed;
             color: var(--text);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
             line-height: 1.5;
         }
 
@@ -39,20 +47,24 @@
         }
 
         h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
+            font-size: clamp(2.2rem, 6vw, 3.4rem);
+            font-weight: 900;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
         }
 
         .subtitle {
             color: var(--muted);
-            font-size: 1rem;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
 
         main {
@@ -64,12 +76,14 @@
         }
 
         .generator-card {
-            background: var(--surface);
-            border: 1px solid #004455;
-            border-radius: 1.5rem;
-            padding: 2.5rem;
+            background:
+                radial-gradient(120% 120% at 50% -20%, rgba(255, 84, 37, 0.10), transparent 60%),
+                var(--surface);
+            border: 1px solid #0a4d5e;
+            border-radius: 1.75rem;
+            padding: 3rem 2.5rem;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
             position: relative;
             overflow: hidden;
         }
@@ -84,40 +98,54 @@
             background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
         }
 
+        .eyebrow {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--primary);
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
         #result {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 2.5rem;
             min-height: 8rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
             text-wrap: balance;
-            transition: opacity 0.1s ease-in-out;
+            line-height: 1.15;
+            transition: opacity 0.12s ease-in-out;
         }
 
-        button {
-            background: var(--primary);
+        .generate-btn {
+            background: linear-gradient(135deg, var(--primary), #ff6a3c);
             color: #fff;
             border: none;
             padding: 1.2rem 3rem;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: 800;
             border-radius: 3rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255, 84, 37, 0.35);
         }
 
-        button:hover {
+        .generate-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(255, 84, 37, 0.5);
-            background: #ff7a50;
+            box-shadow: 0 14px 40px rgba(255, 84, 37, 0.55);
+            filter: brightness(1.06);
         }
 
-        button:active {
+        .generate-btn:active {
             transform: translateY(0);
         }
 
@@ -132,18 +160,25 @@
             .vocabulary-grid {
                 grid-template-columns: 1fr;
             }
-            h1 { font-size: 1.8rem; }
-            #result { font-size: 1.6rem; }
         }
 
         .col {
-            background: rgba(0,64,80,0.3);
-            padding: 1.2rem;
+            background: rgba(0,64,80,0.25);
+            padding: 1.4rem 1.2rem;
             border-radius: 1rem;
             border: 1px solid #004455;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .col:hover {
+            border-color: rgba(255, 84, 37, 0.4);
+            background: rgba(0,64,80,0.4);
         }
 
         .col-title {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
             color: var(--primary);
             font-size: 0.75rem;
             font-weight: 700;
@@ -151,7 +186,17 @@
             margin-bottom: 1rem;
             letter-spacing: 2px;
             border-bottom: 1px solid #004455;
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.6rem;
+        }
+
+        .col-title::before {
+            content: attr(data-slot);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--secondary);
+            opacity: 0.55;
+            letter-spacing: 0;
         }
 
         .word-list {
@@ -165,6 +210,11 @@
 
         .word-list li {
             padding: 2px 0;
+            transition: color 0.15s ease;
+        }
+
+        .word-list li:hover {
+            color: var(--text);
         }
 
         footer {
@@ -359,6 +409,11 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+            .next-steps.visible { animation: none; }
+        }
     </style>
 </head>
 <body>
@@ -370,8 +425,9 @@
 
     <main>
         <section class="generator-card">
+            <div class="eyebrow">// stochastic vocabulary emergence engine v2.7</div>
             <div id="result">Click to disrupt the status quo</div>
-            <button onclick="generate()">Generate Bullshit</button>
+            <button class="generate-btn" onclick="generate()">Generate Bullshit</button>
             <div class="stats" id="stats">Ready for inference...</div>
         </section>
 
@@ -476,15 +532,15 @@
 
         <section class="vocabulary-grid">
             <div class="col">
-                <div class="col-title">Strategic Verbs</div>
+                <div class="col-title" data-slot="01">Strategic Verbs</div>
                 <ul class="word-list" id="list-0"></ul>
             </div>
             <div class="col">
-                <div class="col-title">AI Adjectives</div>
+                <div class="col-title" data-slot="02">AI Adjectives</div>
                 <ul class="word-list" id="list-1"></ul>
             </div>
             <div class="col">
-                <div class="col-title">Emergent Nouns</div>
+                <div class="col-title" data-slot="03">Emergent Nouns</div>
                 <ul class="word-list" id="list-2"></ul>
             </div>
         </section>
@@ -494,7 +550,7 @@
     </main>
 
     <footer>
-        <p>Brought to you by your friends at <a href="https://hacer.ai" target="_blank">hacer.ai</a></p>
+        <!-- <p>Brought to you by your friends at <a href="https://hacer.ai" target="_blank">hacer.ai</a></p> -->
         <p style="margin-top: 0.5rem; font-size: 0.7rem; opacity: 0.6;">In memory of the Original and GOAT: <a href="https://www.dack.com/web/bullshit.html" target="_blank">dack.com/web/bullshit.html</a></p>
         <p style="margin-top: 0.5rem; font-size: 0.65rem; opacity: 0.5;"><a href="https://github.com/hacer-ai/bullshit" target="_blank">Add bullshit yourself →</a></p>
     </footer>
@@ -509,7 +565,9 @@
                 "Decentralize", "Quantize", "Red-team", "Bootstrap", "Vectorize",
                 "Diffuse", "Prompt-engineer", "Containerize", "Distill",
                 "Prune", "Curate", "Reason", "Embed", "Compress", "Deploy",
-                "Speculate", "Hallucinate", "Iterate", "Finetune", "Unlearn"
+                "Speculate", "Hallucinate", "Iterate", "Unlearn", "Agentify",
+                "Vibe-code", "Hyperscale", "Self-host", "Benchmark", "Jailbreak",
+                "Loop", "Self-improve", "Context-engineer", "Sub-agent", "Eval"
             ],
             // List 1: AI Adjectives
             [
@@ -519,7 +577,12 @@
                 "Non-deterministic", "Unsupervised", "Hyper-personalized", "Context-aware", "Post-Turing",
                 "RAG-optimized", "RLHF-driven", "Synthetic", "Zero-knowledge", "Self-healing",
                 "Mamba-powered", "Distilled", "Mixture-of-Experts", "Long-context", "Tool-calling",
-                "Reasoning-native", "Sparse", "Quantized", "Frontier-grade", "Post-AGI"
+                "Reasoning-native", "Sparse", "Quantized", "Frontier-grade", "Post-AGI",
+                "Open-weight", "On-device", "Test-time", "Autonomous", "World-scale",
+                "Harness-native", "Context-engineered", "In-the-loop", "Headless", "Self-orchestrating",
+                // Mythos tier — grandiose, civilization-ending adjectives
+                "Mythos-class", "God-tier", "Civilization-scale", "Promethean", "Demiurgic",
+                "Sovereign-grade", "Apex", "Singularity-grade", "Oracle-class", "Apocalypse-proof"
             ],
             // List 2: Emergent Nouns
             [
@@ -529,7 +592,9 @@
                 "Model Weightings", "Synthetic Workloads", "NPU Arrays", "LPU Clusters", "Data Flywheels",
                 "Constitutional AI", "In-context Learning", "Multi-agent Systems", "GPU Backbones", "Neural Correlates",
                 "State Space Models", "Reasoning Chains", "Attention Heads", "Speculative Decoders", "Mixture Layers",
-                "Embedding Spaces", "Tool Orchestrators", "Reward Models", "Synthetic Datasets", "World Models"
+                "Embedding Spaces", "Tool Orchestrators", "Reward Models", "Synthetic Datasets", "World Models",
+                "Agent Harnesses", "Context Windows", "Agentic Loops", "Subagent Fleets", "Eval Suites",
+                "Context Engineering", "Tool Loops", "Agent Runtimes", "Harness Layers", "Scaffold Graphs"
             ]
         ];
 
@@ -554,15 +619,17 @@
                 resultEl.style.opacity = 1;
             }, 50);
 
-            const total = words[0].length * words[1].length * words[2].length;
+            const total = words.reduce((acc, list) => acc * list.length, 1);
             document.getElementById('stats').textContent = `Inferred from ${total.toLocaleString()} unique combinations.`;
             if (showPanel) showNextSteps();
         }
 
+        // Each builder takes the URL-encoded prompt and returns a deep link that
+        // pre-fills the chat box on the destination site.
         const LLM_URLS = {
-            claude:     'https://claude.ai/new',
-            chatgpt:    'https://chatgpt.com/',
-            perplexity: 'https://www.perplexity.ai/',
+            claude:     q => `https://claude.ai/new?q=${q}`,
+            chatgpt:    q => `https://chatgpt.com/?q=${q}`,
+            perplexity: q => `https://www.perplexity.ai/search?q=${q}`,
         };
 
         function buildPrompt(type, phrase) {
@@ -597,12 +664,14 @@ Make them all feel authentic, slightly embarrassing, and deeply shareable.`,
         function copyAndOpen(type, llm = 'claude') {
             const phrase = document.getElementById('result').textContent.trim();
             const prompt = buildPrompt(type, phrase);
-            const url = LLM_URLS[llm];
+            const url = (LLM_URLS[llm] || LLM_URLS.claude)(encodeURIComponent(prompt));
 
+            // The prompt rides along in the URL, so it lands pre-filled. We also
+            // drop it on the clipboard as a fallback for sites that ignore ?q=.
             navigator.clipboard.writeText(prompt).then(() => {
-                showToast('Prompt copied! Just paste it. They\'ll understand. 🚀');
+                showToast('Prompt loaded into the link (and copied, just in case). 🚀');
             }).catch(() => {
-                showToast('Open the link and paste your idea manually.');
+                showToast('Opening… if the box is empty, paste it yourself.');
             });
 
             window.open(url, '_blank');
